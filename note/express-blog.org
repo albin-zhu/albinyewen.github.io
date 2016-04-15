@@ -1,0 +1,132 @@
+#+title: Express与org-mode搭建简单的blog
+#+date: <2016-02-01 一>
+#+tags: nodejs, org-mode, express, jade, github-web-hooks
+#+description: 从零开始搭建一个blog
+
+* 从hexo迁移
+  关于org-mode与markdown的优劣，这里不多说，各人有各人的习惯。但作为一个emacser很难抛弃org。之前用hexo-renderer-org去解析org,最近一直在看nodejs,不妨搭一个，这里记录一下。
+
+* 材料准备
+
+** express 
+#+begin_src shell
+npm install -g express-generator@4
+#+end_src
+
+** jade
+express中默认的模板，hexo用的extjs，那个用起来有点烦，受python影响比较重，这里选的jade
+
+** org-js
+把org转成html,这里稍微改了一下converter.
+
+** git
+不想用一堆的md5来管理文件的缓存，用git来做管理
+
+** webhooks
+gogs或者github上的webhooks正好可以和express结合起来，把程序跑在vps上，本地只管写org提交就不用操心别的了。
+
+** sv-html
+没有美术，也会设计界面，只能抄别的人网站，用这个简单抓一下html,js,css.配合chrome检查元素一点点的来写jade。
+
+** 七牛cdn加速
+改一下org-js中的html.js把里边的图片默认加上空间的前缀，这样在emacs里的图片显示正常，在网页上也能正常显示。
+
+* 动手做
+
+** 创建app
+#+begin_src shell
+*express org-blog && cd org-blog
+npm install
+#+end_src
+
+** 安装依赖
+#+begin_src shell
+npm install org --save
+npm install walk --save
+npm install js-yaml --save
+npm install cheerio --save
+npm install express-urlrewrite --save
+npm install https://github.com/albinyewen/sv-html.git -g
+#+end_src
+在org-blog中应该有以下文件夹
+#+begin_src yaml
+org-blog:
+ - views
+ - routes
+ - public
+#+end_src
+依次为jade模板，路由，静态文件(js,css,img)
+** 布局
+*** 数据要求
+这个blog要求不多，能显示分类\标签\归档\评论，就行。那就参照 [[https://github.com/wzpan/hexo-theme-freemind][freedmind]] 去做，本来想用timber的，无奈自己没有那么多的图片要放。
+那我需要一个首页，一个分类展示，标签展示，或者其它自定义界面（关于之类的），我的vps比较破破，就用json保存。
+#+begin_src json
+{
+    "recent": [
+        uri
+    ],
+    "tags": {
+        "tag_name": count
+    },
+    "orgs": {
+        "uri": org_doc
+    },
+    "archives": [
+        {
+            "year": 2016, "orgs":[uri]
+        }
+    ],
+    "categories": [
+        "cat_name": count
+    ]
+}
+#+end_src
+*** router
+那对应的route(用url-rewrite表示): */*, */archives*, */cat*, */cat/:cat*, */tag*, */tag/:tag*, */orgs/:cat/:uri/*  。
+*** template
+**** index 
+     首页简单一点，显示近期十篇文章的目录，以文章中的图片
+**** archives
+     以年份做区分，由近及远显示所有文章链接
+**** cat
+     显示所有目录，或指定目录的文章
+**** tag
+     与目录相同，只不过以标签做区分
+
+** 七牛加速
+   把本地的imgs通过 *qrsync*, 同步本地一个目录到七牛的空间，页面上的图片地址加上空间的前缀。本地就用本地的目录，这样在编辑org的时候可以显示图片，页面上的也可以通过cdn加速。
+
+   修改 node_modules/org/lib/org/converter/html.js
+*** convertLink
+#+begin_src js
+    if (this.imageExtensionPattern.exec(node.src)) {
+      var imgText = this.getNodeTextContent(node);
+      var fancy = this.inlineTag("img", null, {
+        src: "http://7xxxx.com1.z0.glb.clouddn.com/org/" + node.src, // 把图片与本地目录同步
+        alt: imgText,
+        title: imgText,
+        class: "org_img"
+      }, auxData);
+    } else {
+      return this.inlineTag("a", childText, { href: node.src });
+    }
+    // 增加facnybox
+    var img = this.inlineTag("a", fancy, {
+      href: "http://7xq9bs.com1.z0.glb.clouddn.com/org/" + node.src,
+      title: imgText,
+      class: "fancybox"
+    });
+    this.imgs.push(img); // 要在首页显示，这里把图片归档一下
+    return img;
+#+end_src
+*** tocToHTML
+放在首页的时候，需要加上页面的root
+#+begin_src
+ var headerLink = this.inlineTag("a", sectionNumber + header, {
+     href: '/' + this.orgDocument.uri + "#header-" + sectionNumberText.replace(/\./g, "-")
+ });
+#+end_src
+
+
+** 自动更新
+这里有两种方式，一种是自己的vps上有git，直接用 *git hooks*

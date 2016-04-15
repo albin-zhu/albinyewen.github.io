@@ -1,0 +1,51 @@
+#+title: ccs2js guides
+#+date: <2015-07-30 四>
+#+tags: cocos, nodejs
+
+* ccsj2 guides
+最好结合puremvc使用，用mediator,操作导出的view代码，以避免手动更改。当然如果不用，也可以继承导出的js类来避免手动更改导出代码。
+现在已经去掉 puremvc 结合的代码,如有需要自行添加
+
+** install
+#+begin_src shell
+npm install ccs2js -g
+#+end_src
+
+# Usage
+切换到cocostudio资源导出目录,里边应该包含若干个json文件,cocostduio可以设置导出json格式的文件.
+#+begin_src shell
+cd /path/to/cocostudio/export/res
+ccs2js -s <fileName> -d <exportDir>
+#+end_src
+** pyqt,lua的启发 
+最近在做一个cocos2d-js的小项目,用了官方的cocostudio觉得很不爽,有了脚本,ui还是用配置表的方式进行加载解析,无论是从效率还是从资源大小都不如直接在脚本写好.唯一要做的就是生成这样一个ui脚本.之前有写过pyqt,里边的方式就是我喜欢的,用ui工具生成一个view的类,项目中只要继承该类,便可以扩展ui功能,qt生成的代码,不要去修改它,基本上就等于是把生成的代码当成资源.cocos2d-js,用的js,我们可以用一个很方便的框架来组织代码,[puremvc](https://github.com/albinyewen/puremvc-js-multicore-framework),对,是它,是它,就是它,actionscript时代,flaser常用的框架.这样一来,生成出来的代码,我们多了一种处理方式,那就是把它当成view层,不用去改它,所有扩展功能放在mediator中去.不仅如此,我们还可以把其它中用到的资源,如图片,字体,声音,粒子等放到场景的model层中去,比如BaseSceneModel,该类中添加loadScene,unloadScene,等一些通用接口.
+#+ATTR_HTML:  :alt 
+[[imgs/npm-package-1.png]]
+** cocostudio导出的json文件
+#+ATTR_HTML:  :alt 以官方给出的Login为示例
+[[imgs/npm-package-2.png]]
+
+稍微做了一些更改,加了一个时间轴动画,设置了easingType,animations.
+我们可以看一下cocos2d给出的json文件解析方法,唯一要做的是把解析部分,改成相应的javascript代码.这里推荐tenjin模板,写好不同控制的js代码,用json数据去填充就ok.[ccs2js](https://github.com/albinyewen/ccs2js)
+** 实现了官方中除了audio与粒子的所有控件
+ * action (timeline动画)
+ * button
+ * checkbox
+ * custom (就是node,把一个拼好的node当成一个自定义控件)
+ * imageview
+ * listview
+ * pageview
+ * panel
+ * scene
+ * scrollview
+ * slider
+ * sprite
+ * text
+ * textbmfont
+ * textfield (包括input)
+	
+** 不足之处 
+ * 对于一些需要代码交互,换言之,mediator层中需要控制的控件,控件名约定为以"_"开头,看起来比较累
+ * 粒子与声音暂未添加(老板有其它的活要做)
+ * 生成的代码没有格式化(时间啊,时间啊!)
+

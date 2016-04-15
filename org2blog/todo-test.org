@@ -1,0 +1,18 @@
+#+title: TODO-TEST
+#+date: <2016-01-27 三>
+#+tags: emacs, org-mode, test
+
+
+
+* TODO Blocked until (two) is done
+** DONE one
+** TODO two
+    
+
+* Parent
+  :PROPERTIES:
+  :ORDERED: t
+  :END:
+** TODO a
+** TODO b, needs to wait for (a)
+** TODO c, needs to wait for (a) and (b)

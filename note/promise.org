@@ -1,0 +1,117 @@
+#+title: Promise Sample
+#+date: <2016-02-01 一>
+#+tags: nodejs
+#+description: save a html with css,js adn images by node js
+
+* Promise and Q
+** install
+   #+begin_src shell
+npm install promise
+npm install q
+   #+end_src
+
+** [[https://promisesaplus.com/][Promise/A+]]
+   参考 http://www.ituring.com.cn/article/66566
+
+**** Promise
+     promise 是一个拥有 then 方法的对象或函数，其行为符合本规范
+
+**** thenable
+     是一个定义了 *then* 方法的对象或函数
+
+**** value
+     指任何 JavaScript 的合法值（包括 undefined , thenable 和 promise）
+
+**** exception
+     是使用 *throw* 语句抛出的一个值。
+
+**** reason
+     表示一个 promise 的拒绝原因......
+
+** Samples
+
+*** 依赖
+保存一个页面，包含css,js and images. 一个例子，目前不保存css以及js中的引用，比如图象字体等.
+用urllib get 页面，mkdirp创建文件夹，cheerio解析页面。
+
+#+begin_src js
+var cheerio = require('cheerio'),
+    urllib  = require('urllib'),
+    fs      = require('fs'),
+    path    = require('path'),
+    Q       = require('q'),
+    mkdirp  = Q.denodeify(require('mkdirp')),
+    write   = Q.denodeify(fs.writeFile);
+#+end_src
+
+*** Promise基础用法
+#+begin_src js
+new Promise((resolve, reject)=> { 
+    // do sthero
+});
+#+end_src
+
+#+begin_src
+var url, save_path;
+
+module.exports = function(u, dir) {
+    url = u;  // 访问的地址比如 http://albin.ga/
+    save_file(u); // 本地保存的目录
+}
+
+function save_file(file) {
+        var req = "";
+        if(file.indexOf(url) >= 0) {
+            req = file;
+            file = file.substring(url.length);
+            if(file.length == 0) {
+                file = "index.html";
+            }
+        }
+        else {
+            req = url + file;
+        }
+        var file_path = path.join(sync_dir, file);
+        var base_name = path.basename(file);
+        mkdirp(path.dirname(file_path))
+            .then(function() {
+                return urllib.request(req);
+            })
+            .then(function(data) {
+                if(path.extname(file) == ".html") {
+                    var $ = cheerio.load(data.data);
+                    $("script").each(function(){
+                        var code = $(this);
+                        var src = code.attr("src");
+                        console.log(src);
+                        if(src && src.indexOf('http') == -1 && src.indexOf('//') == -1) {
+                            save_file(src);
+                        }
+                    });
+                    $('link').each(function(){
+                        var code = $(this);
+                        var src = code.attr("href");
+                        console.log(src);
+                        if(src && src.indexOf('http') == -1  && src.indexOf('//') == -1) {
+                            save_file(src);
+                        }
+                    });
+                    $('img').each(function(){
+                        var code = $(this);
+                        var src = code.attr("src");
+                        console.log(src);
+                        if(src && src.indexOf('http') == -1  && src.indexOf('//') == -1) {
+                            save_file(src);
+                        }
+                    });
+                }
+                return write(file_path, data.data);
+            })
+            .catch(function(err) {
+                console.log(err);
+            });
+        ;
+    }
+#+end_src
+
+[[https://github.com/albinyewen/sv-html][complete]]

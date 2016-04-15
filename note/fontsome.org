@@ -1,0 +1,127 @@
+#+title: 在本系统中使用font-awesome
+#+date: <2016-02-23 二>
+#+tags: font, font-awesome
+
+* $[i:fa-book fa-fw] 使用规则
+** $[i:fa-book fa-fw] 基本使用
+ - 首先要引用
+ - 可以用i,span等标签，class必须以fa开头，比如这个header: <i class="fa fa-book fa-fw"><i>
+
+** $[i:fa-book fa-fw] 图标尺寸
+图标尺寸的大小，是相对于父级容器的大小，fa-lg，可以增加1/3,或fa-2x,fa-3x,fa-4x,fa-5x
+#+begin_src html
+<i class="fa fa-camera-retro fa-lg"></i> fa-lg
+<i class="fa fa-camera-retro fa-2x"></i> fa-2x
+<i class="fa fa-camera-retro fa-3x"></i> fa-3x
+<i class="fa fa-camera-retro fa-4x"></i> fa-4x
+<i class="fa fa-camera-retro fa-5x"></i> fa-5x
+#+end_src
+ - $[i:fa fa-camera-retro fa-lg] lg
+ - $[i:fa fa-camera-retro fa-2x] 2x
+ - $[i:fa fa-camera-retro fa-3x] 3x
+ - $[i:fa fa-camera-retro fa-4x] 4x
+ - $[i:fa fa-camera-retro fa-5x] 5x
+** $[i:fa-book fa-fw] 固定宽度
+使用fa-fw可以将图标设置为固定宽度。这在不同宽度的图标要进行对齐时十分有用。特别是在制作导航列表和列表组是特别有用。
+比如本站菜单
+#+begin_src html
+<div class="list-group">
+  <a class="list-group-item" href="#"><i class="fa fa-home fa-fw"></i>  Home</a>
+  <a class="list-group-item" href="#"><i class="fa fa-book fa-fw"></i>  Library</a>
+  <a class="list-group-item" href="#"><i class="fa fa-pencil fa-fw"></i>  Applications</a>
+  <a class="list-group-item" href="#"><i class="fa fa-cog fa-fw"></i>  Settings</a>
+</div>
+#+end_src
+** $[i:fa-book fa-fw] 列表
+fa-ul, fa-li
+#+begin_src html
+<ul class="fa-ul">
+  <li><i class="fa-li fa fa-check-square"></i>List icons</li>
+  <li><i class="fa-li fa fa-check-circle "></i>can be used</li>
+  <li><i class="fa-li fa fa-spinner fa-spin"></i>as bullets</li>
+  <li><i class="fa-li fa fa-square"></i>in lists</li>
+</ul>
+#+end_src
+** $[i:fa-book fa-fw] 浮动
+   $[i:fa-quote-left fa-3x fa-pull-left]
+                  使用class fa-border和fa-pull-right或fa-pull-left可以很容易的制作出文章的引用图标。
+                  比如一段非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常
+                  非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常
+                  非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常
+                  非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常非常长的文字。   $[i:fa-quote-right fa-3x fa-pull-right]
+
+** $[i:fa-book fa-fw] 动画
+使用class fa-spin可以使任何图标执行旋转动画，使用class fa-pulse可以使图标以8步为周期进行旋转。可以完美执行旋转动画的图标有：fa-spinner，fa-refresh和fa-cog。
+#+begin_src htmml
+<i class="fa fa-spinner fa-spin"></i>
+<i class="fa fa-circle-o-notch fa-spin"></i>
+<i class="fa fa-refresh fa-spin"></i>
+<i class="fa fa-cog fa-spin"></i>
+<i class="fa fa-spinner fa-pulse"></i>
+#+end_src
+$[i:fa-spinner fa-spin fa-5x]    
+$[i:fa-circle-o-notch fa-spin fa-5x]    
+$[i:fa-refresh fa-spin fa-5x]    
+$[i:fa-cog fa-spin fa-5x]    
+$[i:fa-spinner fa-pulse fa-5x]
+
+** $[i:fa-book fa-fw] 堆叠
+要将多个图标堆叠在一起，可以在父元素上使用class fa-stack，fa-stack-1x是正常的图标尺寸，fa-stack-2x是大尺寸的图标。fa-inverse可以反转图标的颜色。在父元素还可以使用fa-lg等图标尺寸来设置图标的尺寸。
+#+begin_src html
+<span class="fa-stack fa-lg">
+  <i class="fa fa-square-o fa-stack-2x"></i>
+  <i class="fa fa-twitter fa-stack-1x"></i>
+</span>
+fa-twitter on fa-square-o<br>
+<span class="fa-stack fa-lg">
+  <i class="fa fa-circle fa-stack-2x"></i>
+  <i class="fa fa-flag fa-stack-1x fa-inverse"></i>
+</span>
+fa-flag on fa-circle<br>
+<span class="fa-stack fa-lg">
+  <i class="fa fa-square fa-stack-2x"></i>
+  <i class="fa fa-terminal fa-stack-1x fa-inverse"></i>
+</span>
+fa-terminal on fa-square<br>
+<span class="fa-stack fa-lg">
+  <i class="fa fa-camera fa-stack-1x"></i>
+  <i class="fa fa-ban fa-stack-2x text-danger"></i>
+</span>
+fa-ban on fa-camera
+#+end_src 
+
+* $[i:fa-codepen] 在本系统中使用
+** $[i:fa-file-code-o] 修改org/lib/org/html.js
+#+begin_src javascript
+  faFont: function(s) {
+    var res = s.match(/\$\[(\w):((\s|[^\]])*)\]/);
+    if(res && res.length >= 3){
+      var s = s.replace(res[0], "<"+res[1] + " class='fa " + res[2] + "'></" + res[1] + ">")
+      console.log(s);
+      return s;
+    }
+    return s
+  },
+#+end_src
+两处地方调用
+#+begin_src javascript
+  convertInlineContainer: function (node, childText, auxData) {
+    return this.faFont(childText);
+  },
+#+end_src
+
+在inlineTag调用
+#+begin_src javascript
+    innerText = this.faFont(innerText);
+    htmlString += ">" + innerText + "</" + name + ">";
+#+end_src
+
+** $[i:fa-file-text] org中使用
+#+begin_src html
+$ [i:fa-codeopen fa-lg] balabalabala
+// 去掉上一行中$与[之间的空格
+#+end_src
+再使用YASnippet添加一个snippet.
+
+
+参考 [[http://www.htmleaf.com/ziliaoku/font-awesome/font-awesome-4-4-0.html][jQuery之家]]
