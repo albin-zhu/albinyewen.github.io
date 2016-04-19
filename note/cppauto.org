@@ -32,10 +32,11 @@ auto& a4 = a1; // std::vector<int, std::allocator<int> >&
 #+end_src
 看一下调试信息
 
-[[gdb_small.png][调试信息]]
+[[imgs/gdb_small.png][
+调试信息]]
 
 #+ATTR_HTML:  :alt 
-[[gdb_big.png]]
+[[imgs/gdb_big.png]]
 
 可以看到与上面的规则一致，使用的时候要注意一下。
 
