@@ -4,9 +4,9 @@
 
 * 闲来无趣不知去何处，听同事说嘉定有一个紫藤园，查地图只有35公里。
 ** 入门
-#+ATTR_HTML: test 
-[[imgs/DSC07060.jpg][入门先来张]]
+#+ATTR_HTML: 入门 
+[[imgs/DSC07060.jpg]]
 
 #+ATTR_HTML: test
-[[imgs/DSC07086.jpg][紫色的]]
+[[imgs/DSC07086.jpg]]
 * 太小了，而且很堵，毕竟不要钱
