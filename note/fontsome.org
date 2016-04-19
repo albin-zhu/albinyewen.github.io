@@ -120,8 +120,6 @@ package-install fontawesome
 [[${1:fa fa-fw}][$2]]$0
 #+end_src
 *** [[fa fa-fw][]] 在emacs中的效果图
-[[imgs/awe.png][
-
-在emacs中的效果图]]
+[[imgs/awe.png]]
 
 [[fa fa-fw][]] 参考 [[http://www.htmleaf.com/ziliaoku/font-awesome/font-awesome-4-4-0.html][jQuery之家]]
