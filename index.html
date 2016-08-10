@@ -2,8 +2,17 @@
 <html lang="en" ng-app="phonecatApp">
   <head>
     <meta charset="utf-8">
-    <title>Albin's Blog</title>
-    <link rel="stylesheet" href="dist/font-awesome.min.css">
+    <title>Albin's Blog</title>  
+  </head>
+  <body data-spy="scroll" data-target="#main-nav" data-offset="400">
+    <div class="view-container">
+      <div ng-view class="view-frame"></div>
+    </div>
+
+    <footer class="text-center">
+        <p>Copyright &copy; 2015-2016 <a href="http://biebb.cc/">biebb (albin)</a></p>
+    </footer>
+        <link rel="stylesheet" href="dist/font-awesome.min.css">
     <link rel="stylesheet" href="dist/bootstrap.min.css">
     <script src="dist/jquery.min.js"></script>
     <script src="dist/angular.min.js"></script>
@@ -46,15 +55,6 @@
     <script type="text/javascript" src="js/libs/prettify.js"></script>
     <script type="text/javascript" src="js/libs/org.js"></script>
     <link href="css/robot.css" type="text/css">
-    <link href="css/titillium.css" rel="stylesheet" type="text/css">    
-  </head>
-  <body data-spy="scroll" data-target="#main-nav" data-offset="400">
-    <div class="view-container">
-      <div ng-view class="view-frame"></div>
-    </div>
-
-    <footer class="text-center">
-        <p>Copyright &copy; 2015-2016 <a href="http://biebb.cc/">biebb (albin)</a></p>
-    </footer>
+    <link href="css/titillium.css" rel="stylesheet" type="text/css">  
   </body>
 </html>
