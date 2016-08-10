@@ -1,0 +1,22 @@
+* Usage
+
+** settings
+ * checkout gh-pages.
+ * modify bin/hooks.js
+ * qiniu cdn keys.
+
+** Write
+ * Make sure you are on master.
+ * Wirte new org, or modify, evnen delete org, then commit.
+ * type commands.
+#+begin_src shell
+ git checkout gh-pages
+ node bin/hooks.js
+ git add .
+ git commit -m "auto commit pages"
+ git push origin gh-pages
+#+end_src
+
+** add hooks
+ * chose your suitable opportunity to publish like above all.
+
