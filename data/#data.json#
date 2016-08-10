@@ -22,8 +22,8 @@
       "date": "2016-03-04 \u4e94",
       "imgs": [
         "orgs\/note\/imgs\/C++-11-CPP-11-features.jpg",
-        "orgs\/note\/gdb_small.png",
-        "orgs\/note\/gdb_big.png"
+        "orgs\/note\/imgs\/gdb_small.png",
+        "orgs\/note\/imgs\/gdb_big.png"
       ],
       "tags": "c++, c++11",
       "cat": "note",
@@ -33,7 +33,9 @@
       "url": "#\/orgs\/note\/fontsome.org",
       "toc": "<ul><li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1 <\/span>\uf02d \u4f7f\u7528\u89c4\u5219<\/a><ul><li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1-1\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.1 <\/span>\uf02d \u57fa\u672c\u4f7f\u7528<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1-2\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.2 <\/span>\uf02d \u56fe\u6807\u5c3a\u5bf8<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1-3\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.3 <\/span>\uf02d \u56fa\u5b9a\u5bbd\u5ea6<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1-4\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.4 <\/span>\uf02d \u5217\u8868<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1-5\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.5 <\/span>\uf02d \u6d6e\u52a8<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1-6\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.6 <\/span>\uf02d \u52a8\u753b<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-1-7\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.7 <\/span>\uf02d \u5806\u53e0<\/a><\/li>\n<\/ul>\n<\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-2\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">2 <\/span>\uf126 \u5728\u672c\u7cfb\u7edf\u4e2d\u4f7f\u7528<\/a><ul><li><a href=\"\/#\/orgs\/note\/fontsome.org#header-2-1\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">2.1 <\/span>\uf1c9 \u4fee\u6539org\/lib\/org\/html.js<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-2-2\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">2.2 <\/span>\uf0f6 org\u4e2d\u4f7f\u7528<\/a><ul><li><a href=\"\/#\/orgs\/note\/fontsome.org#header-2-2-1\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">2.2.1 <\/span>\uf031 \u5b89\u88c5fontawesome<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-2-2-2\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">2.2.2 <\/span>\u5728YASnippet\u6dfb\u52a0\u4e00\u4e2asnippet<\/a><\/li>\n<li><a href=\"\/#\/orgs\/note\/fontsome.org#header-2-2-3\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">2.2.3 <\/span>\uf03e \u5728emacs\u4e2d\u7684\u6548\u679c\u56fe<\/a><\/li>\n<\/ul>\n<\/li>\n<\/ul>\n<\/li>\n<\/ul>\n",
       "date": "2016-02-23 \u4e8c",
-      "imgs": [],
+      "imgs": [
+        "orgs\/note\/imgs\/awe.png"
+      ],
       "tags": "font, font-awesome",
       "cat": "note",
       "title": "\u5728\u672c\u7cfb\u7edf\u4e2d\u4f7f\u7528font-awesome"
@@ -93,6 +95,18 @@
       "tags": "nodejs",
       "cat": "nodejs",
       "title": "Promise Sample"
+    },
+    {
+      "url": "#\/orgs\/life\/\u4e0a\u6d77\u7d2b\u85e4\u56ed.org",
+      "toc": "<ul><li><a href=\"\/#\/orgs\/life\/\u4e0a\u6d77\u7d2b\u85e4\u56ed.org#header-1\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1 <\/span>\u95f2\u6765\u65e0\u8da3\u4e0d\u77e5\u53bb\u4f55\u5904\uff0c\u542c\u540c\u4e8b\u8bf4\u5609\u5b9a\u6709\u4e00\u4e2a\u7d2b\u85e4\u56ed\uff0c\u67e5\u5730\u56fe\u53ea\u670935\u516c\u91cc\u3002<\/a><ul><li><a href=\"\/#\/orgs\/life\/\u4e0a\u6d77\u7d2b\u85e4\u56ed.org#header-1-1\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">1.1 <\/span>\u5165\u95e8<\/a><\/li>\n<\/ul>\n<\/li>\n<li><a href=\"\/#\/orgs\/life\/\u4e0a\u6d77\u7d2b\u85e4\u56ed.org#header-2\" target=\"_blank\" class=\"fa\"><span class=\"section-number\">2 <\/span>\u592a\u5c0f\u4e86\uff0c\u800c\u4e14\u5f88\u5835\uff0c\u6bd5\u7adf\u4e0d\u8981\u94b1<\/a><\/li>\n<\/ul>\n",
+      "date": "2016-04-19 \u4e8c",
+      "imgs": [
+        "orgs\/life\/imgs\/DSC07060.jpg",
+        "orgs\/life\/imgs\/DSC07086.jpg"
+      ],
+      "tags": "photo, travl",
+      "cat": "life",
+      "title": "\u4e0a\u6d77\u7d2b\u85e4\u56ed\u534a\u5c0f\u65f6\u6e38"
     }
   ],
   "tags": [
@@ -109,10 +123,13 @@
     "express",
     "jade",
     "github-web-hooks",
-    "nodejs"
+    "nodejs",
+    "photo",
+    "travl"
   ],
   "cats": [
     "note",
-    "nodejs"
+    "nodejs",
+    "life"
   ]
 }

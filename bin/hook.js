@@ -134,35 +134,32 @@ var fs = require("fs"),
 
     }
 
-    var server = http.createServer(function (request, response) {
-        if (request) {
-            //var commits = request.body.head_commit;
-            //console.log(commits);
+    function generateGhPages()
+    {
+        var last_time = fs.statSync('.last').mtime;
+        exec('cd orgs && git pull origin master');
+        var tmp = new OrgDB();
+        tmp.init('orgs/');
 
-            var last_time = fs.statSync('.last').mtime;
-            exec('cd orgs && git pull origin master');
-            var tmp = new OrgDB();
-            tmp.init('orgs/');
+        var walker = walk.walk('orgs/');
+        var self = this;
+        walker.on("file", function(root, fileStats, next){
+            var filename = path.join(root, fileStats.name);
+            if(path.extname(filename).indexOf('.git')<0){
+                uploadFile(filename);
+            }
+            next();
+        });
 
-            var walker = walk.walk('orgs/');
-            var self = this;
-            walker.on("file", function(root, fileStats, next){
-                var filename = path.join(root, fileStats.name);
-                if(path.extname(filename).indexOf('.git')<0){
-                    uploadFile(filename);
-                }
-                next();
-            });
+        walker.on("errors", function(root, erros, next){
+            console.log(erros);
+            next();
+        })
+        walker.on("end", function(){
+            console.log("Done!");
+        })
+        exec('touch .last');
+    }
 
-            walker.on("errors", function(root, erros, next){
-                console.log(erros);
-                next();
-            })
-            walker.on("end", function(){
-                console.log("Done!");
-            })
-            exec('touch .last');
-        }
-        response.end('done');
-    }).listen(8080);
+    generateGhPages();
 })();
