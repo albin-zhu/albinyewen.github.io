@@ -37,7 +37,6 @@ ctrls.controller('AlertDemoCtrl', ['$scope', function($scope){
 
 ctrls.controller('WelcomeCtrl', ['$scope', 'DataProxy', '$uibModal', function($scope, DataProxy, $uibModal) {
     $scope.active = 0;
-    $scope.cdn_path = cdn_path;
     $scope.query = {};
     $scope.query.cat = "";
     $scope.query.tags = "";
@@ -76,7 +75,7 @@ ctrls.controller('WelcomeCtrl', ['$scope', 'DataProxy', '$uibModal', function($s
     $scope.open = function(data) {
         var modalInstance = $uibModal.open({
             animation: true,
-            templateUrl: cdn_path + "partials/preview.html",
+            templateUrl: "partials/preview.html",
             controller: "ModalCtrl",
             resolve: {
                 items: function () {
@@ -92,7 +91,6 @@ ctrls.controller('WelcomeCtrl', ['$scope', 'DataProxy', '$uibModal', function($s
 
 ctrls.controller('ModalCtrl', ['$scope', 'items', function($scope, items){
     $scope.item = items;
-    $scope.cdn_path = cdn_path;
     setTimeout(function(){
                 $('.screen.flexslider').flexslider({
                     prevText: '<i class="fa fa-angle-left"></i>',
@@ -112,10 +110,10 @@ ctrls.controller('ModalCtrl', ['$scope', 'items', function($scope, items){
 }])
 
 ctrls.controller('ArticleCtrl', ['$scope', '$routeParams', '$http', function($scope, $routeParams, $http){
-    $scope.uri = cdn_path + 'orgs/' + $routeParams.cat + '/';
+    $scope.uri = 'orgs/' + $routeParams.cat + '/';
     $http({
         method: 'GET',
-        url: cdn_path + 'orgs/' + $routeParams.cat + '/' + $routeParams.org
+        url: 'orgs/' + $routeParams.cat + '/' + $routeParams.org
     }).then(function successCallback(code) {
         var orgParser = new Org.Parser();
         try {

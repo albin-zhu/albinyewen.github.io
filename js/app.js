@@ -17,7 +17,7 @@ phonecatApp.config(['$routeProvider', '$sceDelegateProvider', function($routePro
     $sceDelegateProvider.resourceUrlWhitelist(['**']);
     $routeProvider.
     when('/phones', {
-        templateUrl: cdn_path + 'partials/phone-list.html',
+        templateUrl: 'partials/phone-list.html',
         controller: 'PhoneListCtrl',
         title: 'test',
     }).
