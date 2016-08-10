@@ -1,0 +1,1018 @@
+#+TITLE: python学习笔记
+#+DATE: <2016-01-19 五 18:12>
+#+TAGS: albin
+#+DESCRIPTION: 粗略介绍一下python,简单入门，以及几个例子
+
+* 为什么会有这个东西
+  #+ATTR_HTML:  :alt JIRA
+  [[imgs/jira-python.png]] [[http://10.1.29.87:8080/browse/SXD-2066][JIRA]]
+
+  python我也只是用她来做一些辅助性的工作，今天主要目的是给不了解她的同学介绍一下她，和她很熟的，就当我是抛砖引玉，希望有大牛来带我们飞。
+
+* 简介
+
+  语言应该都有自己所擅长的领域，甚至是专门为了某些需求而生。而 *Python* 居然是著名的“龟叔”Guido van Rossum在1989年圣诞节期间，为了打发无聊的圣诞节而编写的一个编程语言。可想而知程序员无聊起来是多么的可怕。现在我们用的语言是不是大多数是因为某位大牛无聊了。
+
+  *Python* 发展到现在，她主要涉及了哪些领域。看一下知乎上说的 https://www.zhihu.com/question/20799742
+  #+ATTR_HTML:  :alt 知乎
+  [[imgs/zhihu.png]]
+
+** 游戏
+
+   + 最早的cocos2d-iphone就是从python的pycocos移植过来的。由于她寄生于好多语言之上，把她当lua用的也是有的，当然还有早期的unity3d boo。
+
+** WEB服务
+
+   + 许多大型网站就是用Python开发的，例如YouTube、Instagram，还有国内的豆瓣。很多大公司，包括Google、Yahoo等，甚至NASA（美国航空航天局）都大量地使用Python。
+
+** 工具
+
+   + *Python* 有一个非常好用的包管理软件, *pip*, 比如我们现在想连接数据库 *pip search mysql* 然后根据找到的进行安装，比如 *pip install PyMySQL3* 。如果想看它的文档，可以直接访问 https://pypi.python.org/pypi/PyMySQL3 ，这里的最后一个就是我们所安装的包名。
+
+** 管理脚本
+
+   + GNU下面有一大堆的sh，bash，zsh，ksh，而windows却是bat。如果想写一条简单的部署脚本， *Python* 是个不错的选择。比如svn，或者git的hooks
+
+* 简单的小例子
+** 策划
+*** *Python* 在我们公司的策划层面已经用到很多了比如
+    - x2x: xls 转换成xml,并且检查数据规范 
+    - x2p: xls 转换成protobuf的binary，检查数据规范
+
+** 美术
+*** 处理图片
+    当然ps有自己的脚本(javascript),而且还有那么多api要看，如果只是想做一些简单的处理就比较麻烦
+    - win32com: 目前pip上只有windows平台下的win32com可以写psd,fla等
+      * 根据已经有psd替换其中的文本，文本来自策划的excel
+      * fla的操作，这个就比不上jsfl了
+    - 如果只是导出psd，可以用 [[https://pypi.python.org/pypi/psd-tools][psd-tools]], [[http://www.cnblogs.com/txw1958/archive/2012/02/21/python3-PIL.html][pil]] :
+      * 根据策划的要求，制作不同规格的图片
+      * 压缩或者其它处理
+
+*** 3dmax
+    3dmax的脚本分两种
+    - 一种是自己解释器里的 *Python* ，要求必须装了3dmax
+    - 脱离软件的 *Python*  http://docs.autodesk.com/3DSMAX/16/ENU/3ds-Max-Python-API-Documentation/index.html
+    #+ATTR_HTML:  :alt 3dmax-python
+    [[imgs/3dmax-python.png]]
+
+** 测试
+*** 模拟操作
+    会了 *Python* 即使没有按键精灵也可以模拟操作，如果你熟的话，还可以制作复杂的操作流程。
+    如果对数据协议了解的话，甚至可以截取客户端与服务器之间的通信，精确的模拟操作。不在像按键精灵等类似软件一样纯粹的模拟鼠标和键盘。
+
+** 程序
+   这个就太多了。。。都不知道怎么去说她了，你怎么这么能干。比如用她写游戏。先看看 [[http://python.cocos2d.org/][cocos]]
+*** cocos
+    #+begin_src python
+#!/bin/env python
+
+import cocos
+
+class HelloPython(cocos.layer.Layer):
+    def __init__(self):
+        super(HelloPython, self).__init__()
+
+        label - cocos.text.Label("Hello Python",
+                                 font_name = "Arial",
+                                 font_szie = 32,
+                                 anchor_x = "center", anchor_y = "center")
+        label.position = 320, 240
+        self.add(label)
+
+cocos.director.director.init()
+hello_layer = HelloPython()
+main_scene = cocos.scene.Scene(hello_layer)
+cocos.director.run(main_scene)
+    #+end_src
+    还是看别人的吧
+
+    #+ATTR_HTML:  :alt ball
+    [[imgs/ball.png]]
+
+    #+begin_src python
+from __future__ import division, print_function, unicode_literals
+
+# This code is so you can run the samples without installing the package
+import sys
+import os
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '../..'))
+#
+
+import random
+import math
+
+import pyglet
+from pyglet.window import key
+from pyglet.gl import *
+
+import cocos
+from cocos.director import director
+import cocos.collision_model as cm
+import cocos.euclid as eu
+import cocos.actions as ac
+
+fe = 1.0e-4
+consts = {
+    "window": {
+        "width": 800,
+        "height": 600,
+        "vsync": True,
+        "resizable": True
+    },
+    "world": {
+        "width": 400,
+        "height": 300,
+        "rPlayer": 8.0,
+        "wall_scale_min": 0.75,  # relative to player
+        "wall_scale_max": 2.25,  # relative to player
+        "topSpeed": 100.0,
+        "angular_velocity": 240.0,  # degrees / s
+        "accel": 85.0,
+        "bindings": {
+            key.LEFT: 'left',
+            key.RIGHT: 'right',
+            key.UP: 'up',
+        }
+    },
+    "view": {
+        # as the font file is not provided it will decay to the default font;
+        # the setting is retained anyway to not downgrade the code
+        "font_name": 'Axaxax',
+        "palette": {
+            'bg': (0, 65, 133),
+            'player': (237, 27, 36),
+            'wall': (247, 148, 29),
+            'gate': (140, 198, 62),
+            'food': (140, 198, 62)
+        }
+    }
+}
+
+# world to view scales
+scale_x = consts["window"]["width"] / consts["world"]["width"]
+scale_y = consts["window"]["height"] / consts["world"]["height"]
+
+
+def world_to_view(v):
+    """world coords to view coords; v an eu.Vector2, returns (float, float)"""
+    return v.x * scale_x, v.y * scale_y
+
+
+class Actor(cocos.sprite.Sprite):
+    palette = {}  # injected later
+
+    def __init__(self, cx, cy, radius, btype, img, vel=None):
+        super(Actor, self).__init__(img)
+        # the 1.05 so that visual radius a bit greater than collision radius
+        self.scale = (radius * 1.05) * scale_x / (self.image.width / 2.0)
+        self.btype = btype
+        self.color = self.palette[btype]
+        self.cshape = cm.CircleShape(eu.Vector2(cx, cy), radius)
+        self.update_center(self.cshape.center)
+        if vel is None:
+            vel = eu.Vector2(0.0, 0.0)
+        self.vel = vel
+
+    def update_center(self, cshape_center):
+        """cshape_center must be eu.Vector2"""
+        self.position = world_to_view(cshape_center)
+        self.cshape.center = cshape_center
+
+
+class MessageLayer(cocos.layer.Layer):
+
+    """Transitory messages over worldview
+
+    Responsability:
+    full display cycle for transitory messages, with effects and
+    optional callback after hiding the message.
+    """
+
+    def show_message(self, msg, callback=None):
+        w, h = director.get_window_size()
+
+        self.msg = cocos.text.Label(msg,
+                                    font_size=52,
+                                    font_name=consts['view']['font_name'],
+                                    anchor_y='center',
+                                    anchor_x='center')
+        self.msg.position = (w / 2.0, h)
+
+        self.add(self.msg)
+
+        actions = (
+            ac.Show() + ac.Accelerate(ac.MoveBy((0, -h / 2.0), duration=0.5)) +
+            ac.Delay(1) +
+            ac.Accelerate(ac.MoveBy((0, -h / 2.0), duration=0.5)) +
+            ac.Hide()
+        )
+
+        if callback:
+            actions += ac.CallFunc(callback)
+
+        self.msg.do(actions)
+
+
+def reflection_y(a):
+    assert isinstance(a, eu.Vector2)
+    return eu.Vector2(a.x, -a.y)
+
+
+class Worldview(cocos.layer.Layer):
+
+    """
+    Responsabilities:
+        Generation: random generates a level
+        Initial State: Set initial playststate
+        Play: updates level state, by time and user input. Detection of
+        end-of-level conditions.
+        Level progression.
+    """
+    is_event_handler = True
+
+    def __init__(self, fn_show_message=None):
+        super(Worldview, self).__init__()
+        self.fn_show_message = fn_show_message
+
+        # basic geometry
+        world = consts['world']
+        self.width = world['width']  # world virtual width
+        self.height = world['height']  # world virtual height
+        self.rPlayer = world['rPlayer']  # player radius in virtual space
+        self.wall_scale_min = world['wall_scale_min']
+        self.wall_scale_max = world['wall_scale_max']
+        self.topSpeed = world['topSpeed']
+        self.angular_velocity = world['angular_velocity']
+        self.accel = world['accel']
+
+        # load resources:
+        pics = {}
+        pics["player"] = pyglet.resource.image('player7.png')
+        pics["food"] = pyglet.resource.image('circle6.png')
+        pics["wall"] = pyglet.resource.image('circle6.png')
+        self.pics = pics
+
+        cell_size = self.rPlayer * self.wall_scale_max * 2.0 * 1.25
+        self.collman = cm.CollisionManagerGrid(0.0, self.width,
+                                               0.0, self.height,
+                                               cell_size, cell_size)
+
+        self.bindings = world['bindings']
+        buttons = {}
+        for k in self.bindings:
+            buttons[self.bindings[k]] = 0
+        self.buttons = buttons
+
+        self.toRemove = set()
+        self.schedule(self.update)
+        self.ladder_begin()
+
+    def ladder_begin(self):
+        self.level_num = 0
+        self.empty_level()
+        msg = 'balldrive'
+        self.fn_show_message(msg, callback=self.level_launch)
+
+    def level_launch(self):
+        self.generate_random_level()
+        msg = 'level %d' % self.level_num
+        self.fn_show_message(msg, callback=self.level_start)
+
+    def level_start(self):
+        self.win_status = 'undecided'
+
+    def level_conquered(self):
+        self.win_status = 'intermission'
+        msg = 'level %d\nconquered !' % self.level_num
+        self.fn_show_message(msg, callback=self.level_next)
+
+    def level_losed(self):
+        self.win_status = 'losed'
+        msg = 'ouchhh !!!'
+        self.fn_show_message(msg, callback=self.ladder_begin)
+
+    def level_next(self):
+        self.empty_level()
+        self.level_num += 1
+        self.level_launch()
+
+    def empty_level(self):
+        # del old actors, if any
+        for node in self.get_children():
+            self.remove(node)
+        assert len(self.children) == 0
+        self.player = None
+        self.gate = None
+        self.food_cnt = 0
+        self.toRemove.clear()
+
+        self.win_status = 'intermission'  # | 'undecided' | 'conquered' | 'losed'
+
+        # player phys params
+        self.topSpeed = 75.0  # 50.
+        self.impulse_dir = eu.Vector2(0.0, 1.0)
+        self.impulseForce = 0.0
+
+    def generate_random_level(self):
+        # hardcoded params:
+        food_num = 5
+        food_scale = 1.0  # relative to player
+        wall_num = 10
+        gate_scale = 1.5  # relative to player
+        min_separation_rel = 3.0  # as fraction of player diameter
+
+        # build !
+        width = self.width
+        height = self.height
+        rPlayer = self.rPlayer
+        min_separation = min_separation_rel * rPlayer
+        wall_scale_min = self.wall_scale_min
+        wall_scale_max = self.wall_scale_max
+        pics = self.pics
+        z = 0
+
+        # add player
+        cx, cy = (0.5 * width, 0.5 * height)
+        self.player = Actor(cx, cy, rPlayer, 'player', pics['player'])
+        self.collman.add(self.player)
+
+        minSeparation = min_separation * 2. * rPlayer
+
+        # add gate
+        rGate = gate_scale * rPlayer
+        self.gate = Actor(cx, cy, rGate, 'gate', pics['wall'])
+        self.gate.color = Actor.palette['wall']
+        cntTrys = 0
+        while cntTrys < 100:
+            cx = rGate + random.random() * (width - 2.0 * rGate)
+            cy = rGate + random.random() * (height - 2.0 * rGate)
+            self.gate.update_center(eu.Vector2(cx, cy))
+            if not self.collman.they_collide(self.player, self.gate):
+                break
+            cntTrys += 1
+        self.add(self.gate, z=z)
+        z += 1
+        self.collman.add(self.gate)
+
+        # add food
+        rFood = food_scale * rPlayer
+        self.cnt_food = 0
+        for i in range(food_num):
+            food = Actor(cx, cy, rFood, 'food', pics['food'])
+            cntTrys = 0
+            while cntTrys < 100:
+                cx = rFood + random.random() * (width - 2.0 * rFood)
+                cy = rFood + random.random() * (height - 2.0 * rFood)
+                food.update_center(eu.Vector2(cx, cy))
+                if self.collman.any_near(food, min_separation) is None:
+                    self.cnt_food += 1
+                    self.add(food, z=z)
+                    z += 1
+                    self.collman.add(food)
+                    break
+                cntTrys += 1
+
+        # add walls
+        for i in range(wall_num):
+            s = random.random()
+            r = rPlayer * (wall_scale_min * s + wall_scale_max * (1.0 - s))  # lerp
+            wall = Actor(cx, cy, r, 'wall', pics['wall'])
+            cntTrys = 0
+            while cntTrys < 100:
+                cx = r + random.random() * (width - 2.0 * r)
+                cy = r + random.random() * (height - 2.0 * r)
+                wall.update_center(eu.Vector2(cx, cy))
+                if self.collman.any_near(wall, min_separation) is None:
+                    self.add(wall, z=z)
+                    z += 1
+                    self.collman.add(wall)
+                    break
+                cntTrys += 1
+
+        self.add(self.player, z=z)
+        z += 1
+
+    def update(self, dt):
+        # if not playing dont update model
+        if self.win_status != 'undecided':
+            return
+
+        # update collman
+        self.collman.clear()
+        for z, node in self.children:
+            self.collman.add(node)
+
+        # interactions player - others
+        for other in self.collman.iter_colliding(self.player):
+            typeball = other.btype
+            if typeball == 'food':
+                self.toRemove.add(other)
+                self.cnt_food -= 1
+                if not self.cnt_food:
+                    self.open_gate()
+
+            elif (typeball == 'wall' or
+                  typeball == 'gate' and self.cnt_food > 0):
+                self.level_losed()
+
+            elif typeball == 'gate':
+                self.level_conquered()
+
+        # update player
+        buttons = self.buttons
+        ma = buttons['right'] - buttons['left']
+        if ma != 0:
+            self.player.rotation += ma * dt * self.angular_velocity
+            a = math.radians(self.player.rotation)
+            self.impulse_dir = eu.Vector2(math.sin(a), math.cos(a))
+
+        newVel = self.player.vel
+        mv = buttons['up']
+        if mv != 0:
+            newVel += dt * mv * self.accel * self.impulse_dir
+            nv = newVel.magnitude()
+            if nv > self.topSpeed:
+                newVel *= self.topSpeed / nv
+
+        ppos = self.player.cshape.center
+        newPos = ppos
+        r = self.player.cshape.r
+        while dt > 1.e-6:
+            newPos = ppos + dt * newVel
+            consumed_dt = dt
+            # what about screen boundaries ? if colision bounce
+            if newPos.x < r:
+                consumed_dt = (r - ppos.x) / newVel.x
+                newPos = ppos + consumed_dt * newVel
+                newVel = -reflection_y(newVel)
+            if newPos.x > (self.width - r):
+                consumed_dt = (self.width - r - ppos.x) / newVel.x
+                newPos = ppos + consumed_dt * newVel
+                newVel = -reflection_y(newVel)
+            if newPos.y < r:
+                consumed_dt = (r - ppos.y) / newVel.y
+                newPos = ppos + consumed_dt * newVel
+                newVel = reflection_y(newVel)
+            if newPos.y > (self.height - r):
+                consumed_dt = (self.height - r - ppos.y) / newVel.y
+                newPos = ppos + consumed_dt * newVel
+                newVel = reflection_y(newVel)
+            dt -= consumed_dt
+
+        self.player.vel = newVel
+        self.player.update_center(newPos)
+
+        # at end of frame do removes; as collman is fully regenerated each frame
+        # theres no need to update it here.
+        for node in self.toRemove:
+            self.remove(node)
+        self.toRemove.clear()
+
+    def open_gate(self):
+        self.gate.color = Actor.palette['gate']
+
+    def on_key_press(self, k, m):
+        binds = self.bindings
+        if k in binds:
+            self.buttons[binds[k]] = 1
+            return True
+        return False
+
+    def on_key_release(self, k, m):
+        binds = self.bindings
+        if k in binds:
+            self.buttons[binds[k]] = 0
+            return True
+        return False
+
+
+def main():
+    # make window
+    director.init(**consts['window'])
+    #pyglet.font.add_directory('.') # adjust as necessary if font included
+    scene = cocos.scene.Scene()
+    palette = consts['view']['palette']
+    Actor.palette = palette
+    r, g, b = palette['bg']
+    scene.add(cocos.layer.ColorLayer(r, g, b, 255), z=-1)
+    message_layer = MessageLayer()
+    scene.add(message_layer, z=1)
+    playview = Worldview(fn_show_message=message_layer.show_message)
+    scene.add(playview, z=0)
+    director.run(scene)
+
+main()
+
+    #+end_src
+
+*** 12306
+*** 外挂
+    #+ATTR_HTML:  :alt 外挂
+    [[imgs/python-waigua.png]]
+
+*** 搭梯子
+    - goagent
+    - shadowsocks
+*** 做网站
+    #+ATTR_HTML:  :alt django
+    [[imgs/django.png]]
+
+*** 爬虫
+    这个好像不能多说。。。
+
+* 基本语法
+** 简述
+   1. # 之后表注释
+   2. 通常一个语句一行，用标准换行(\n)
+   3. \ 表示继续上一行
+   4. ; 将两个语句连接在一行
+   5. : 将代码块的头和体分开，比如 if express :
+   6. python的代码块不是用花括号体现，而是用相同的缩进表示
+   7. python 文件以模块的形式组织
+
+*** 讨厌的编码
+    #+BEGIN_SRC python
+#!/bin/env python
+# coding=utf-8
+    #+END_SRC
+
+    第一行注释是为了告诉Linux/OS X系统，这是一个Python可执行程序，Windows系统会忽略这个注释；
+    第二行注释是为了告诉Python解释器，按照UTF-8编码读取源代码，否则，你在源代码中写的中文输出可能会有乱码。
+    申明了UTF-8编码并不意味着你的.py文件就是UTF-8编码的，必须并且要确保文本编辑器正在使用UTF-8 without BOM编码
+
+    #+begin_src python
+print 'ABC'.encode('ascii')
+print u'中文'.encode('utf-8')
+print u'中文'.encode('ascii')
+print b'\xe4\xb8\xad\xe6\x96\x87'.decode('utf-8')
+    #+end_src
+
+    纯英文的str可以用ASCII编码为bytes，内容是一样的，含有中文的str可以用UTF-8编码为bytes。含有中文的str无法用ASCII编码，因为中文编码的范围超过了ASCII编码的范围，Python会报错。
+    在bytes中，无法显示为ASCII字符的字节，用 *\x##* 显示。
+    反过来，如果我们从网络或磁盘上读取了字节流，那么读到的数据就是bytes。要把bytes变为str，就需要用decode()方法
+    python 的格式化操作与C语言是一样的，如果不确定用什么 *%s* 是永远有效的。
+
+** 数据类型与变量
+
+*** 基本数据类型
+    在用的时候不用过分的去在意，但要知道它的类型有哪些，支持到什么程度，不要用错就OK
+    1. 整数，可以很长很长
+    2. 浮点数，也可以很长很长
+    3. 字符串，上面已经恶心过了
+    4. 布尔值，True\False, 不是true\false
+    5. 空值，None
+
+**** 先看一小段简单的代码
+
+     #+begin_src python
+#!/bin/env python
+# coding=utf-8
+
+from fractions import Fraction
+
+def complex_test(real, imag):
+    c = complex(real,imag)
+    print c
+    print c == (3 + 0.7j)
+    c -= 1
+    c *= 2
+    try:
+        print "c.real = " + c.real + ", c.imag = " + c.imag
+    except TypeError as e:
+        print e
+        print "c.real = %f, c.imag = %fj"\
+            % (c.real, c.imag)
+
+def main():
+    """
+    我们来讲一下最简单的 python 程序：
+    解释型语言，运行慢，开发快。最常见于网站，其次是日常小工具，或者代替shell做管理脚本。
+    它的设计就是冲着“优雅“…“简单“…“明确“，看起来图森破。
+    ps:(我不是注释，我是字符串，但我有注释的效果)
+    """
+    2 # 这样真的不会报错吗 ，上边那些是字符串，我是整型，应该不会错吧
+
+    a, b, c, d = "sb", 501 // 2, 501 / 2.0, 10 ** 192 / 3.0 # 你真的好长
+    b, a = a,b
+    print "a is type (%s) : %s" % (type(a), a)
+    print "b is type (%s) : %s" % (type(b), b)
+    print "c is type (%s) : %s" % (type(c), c)
+    print "d is type (%s) : %s" % (type(d), d)
+
+    print u"来点复杂的吧"
+    i_am_a_fraction = Fraction(2, 6)
+    print str(i_am_a_fraction)
+    i_am_a_fraction += Fraction(7, 9)
+    print i_am_a_fraction
+    i_am_a_fraction += 1
+    print i_am_a_fraction
+    i_am_a_fraction += 1.0
+    print i_am_a_fraction
+
+    # 函数调用
+    complex_test(3,0.7)
+
+
+
+if __name__ == '__main__':
+    main()
+     #+end_src
+**** ps:字符串的一些API，适用接下来的list#
+     1. substring, 变态的要来了
+     #+begin_src python
+a_str = 'hey, come on baby, sub me!'
+print a_str[5:9]
+print a_str[5:]
+print a_str[:-9]
+     #+end_src
+     output:
+     #+begin_src python
+come
+come on baby, sub me!
+hey, come on baby
+
+     #+end_src
+     2. reverssring
+     #+begin_src python
+a_str = '0123456789'
+print a_str[::-1]
+for i in range(10):
+print a_str[i::-1]
+print a_str[::-2]
+for i in range(5):
+print a_str[i::-2]
+     #+end_src
+     output:
+     #+begin_src python
+9876543210
+0
+10
+210
+3210
+43210
+543210
+6543210
+76543210
+876543210
+9876543210
+97531
+0
+1
+20
+31
+420
+     #+end_src
+
+*** list and tuple
+**** list
+     list也就是数组，但不是c++的list,它更像PHP，或者JS，它说下来也就是下面几点：
+     1. 变长
+     2. 类型不要求一致
+     3. 取长度的时候用的是 len, 这一点基本与其它类型都一样
+     4. 不是push,是append.
+     5. 有越界风险，取最后一个用somelist[-1]
+     6. 可以嵌套，与第二点相符
+     #+begin_src python
+a_list = [i*i for i in range(10)]
+last_one = a_list[-1]
+print last_one
+print a_list.pop()
+print a_list
+
+mix_list = ["a", 1, [None, True, False], {'a':1, 'b':"2"}, ("sb", 520)]
+mix_list.append("2b")
+print mix_list
+     #+end_src
+     output:
+     #+begin_src python
+9
+9
+[0, 1, 4, 9, 16, 25, 36, 49, 64]
+['a', 1, [None, True, False], {'a': 1, 'b': '2'}, ('sb', 520), '2b']
+     #+end_src
+**** tuple
+     另一种有序列表叫元组：tuple。tuple和list非常类似，但是tuple一旦初始化就不能修改。
+     需要注意的是定义单个tuple的时候，不能用 *t = (1)*,这表示的是 *t = 1* ，而是要用 *t = (1, )*
+
+     ps: enmuator
+
+*** dict and set
+**** dict
+     它就是一个map,安全取值有两种方式，取之前用 *in*
+     #+begin_src ptyhon
+if key in d:
+ d[key]
+     #+end_src
+     第二种用get
+     #+begin_src python
+d.get(key)
+d.get(key, default) # return default
+     #+end_src
+     删除只需要 *d.pop(key)*, value会自动删除
+     ps:上面的list 中用到了dict
+
+**** set
+     *aset.add(key)*
+     *aset.remove(key)*
+     就这两个api，另外注意它是唯一的，无序的就OK
+
+** 控制语句
+   首先要说明的是，python没有 *switch*
+
+*** 条件判断
+    *if elif else* 简单的不多说了，不过用 if 可以写三元运算 *V1 if X else V2* 。 如果确定 V1不是空字符串('')的话，也可以： *(X and V1) or V2*
+
+*** 循环
+    要注意的是多层循环中break是跳出当前循环
+    #+begin_src python
+for i in range(3):
+ print "i : %s" % i
+ for j in range(3):
+     print "j : %s" % j
+     for k in range(3):
+         if k == 1:
+             break
+         print "k : %s" % k
+    #+end_src
+    如果要跳出所有循环，可以raise一个异常，在外边捕捉，或者定义成函数跳出
+    #+begin_src python
+try:
+ for i in range(3):
+     print "i : %s" % i
+     for j in range(3):
+         print "j : %s" % j
+         for k in range(3):
+             if k == 1:
+                 raise Exception("test")
+             print "k : %s" % k
+except Exception as e:
+ print e
+    #+end_src
+    实在想跳出指定的，可以用for else语句，如果for正常执行完，会调用else语句块
+    #+begin_src python
+for i in range(3):
+ print "i : %s" % i
+ for j in range(3):
+     print "j : %s" % j
+     for k in range(3):
+         break
+     else:continue
+     break
+ else:continue
+ break
+    #+end_src
+    output
+    #+begin_src python
+i : 0
+j : 0
+k : 0
+j : 1
+k : 0
+j : 2
+k : 0
+i : 1
+j : 0
+k : 0
+j : 1
+k : 0
+j : 2
+k : 0
+i : 2
+j : 0
+k : 0
+j : 1
+k : 0
+j : 2
+k : 0
+================================================================================
+i : 0
+j : 0
+k : 0
+test
+================================================================================
+i : 0
+j : 0
+-----------------------------------------------------
+    #+end_src
+** 函数注意点
+   任意函数都有反回值，如果没有 *return*,返回值是 *None*
+*** 默认参数
+    #+begin_src python
+def xxx(arg1, arg2 = defaultvalue):
+ pass
+    #+end_src
+*** 可变参数
+    #+begin_src python
+def calc(numbers):
+ sum = 0
+ for n in numbers:
+     sum = sum + n * n
+ return sum
+
+calc((1,2,3,4,5))
+
+def calc(*numbers):
+ sum = 0
+ for n in numbers:
+     sum = sum + n * n
+     return sum
+
+args = (1,2,3,4,5)
+calc(*args) # 可以把tuple变成参数依次传入
+
+    #+end_src
+*** 关键字参数
+    #+begin_src python
+def person(name, age, **kw):
+ if 'city' in kw:
+     # 有city参数
+     pass
+ if 'job' in kw:
+     # 有job参数
+     pass
+     print('name:', name, 'age:', age, 'other:', kw)
+    #+end_src
+    如果想限制传入的值可以用
+    *def person(name, age, *, city, job)* ,那么city与job就是必填项，当然这里也可以用默认值，比如 *def person(name, age, *,city="Shangehai", job)* ,注意一下关键字参数如果用默认值是不用关心顺序的。
+    dict可以在前边加上'**',做为关键字参数
+    #+begin_src python
+extra = {'city': 'Beijing', 'job': 'Engineer'}
+person("SB", 28, **extra)
+    #+end_src
+    TEST:
+    #+begin_src python
+def f1(a, b, c=0, *args, **kw):
+ print('a =', a, 'b =', b, 'c =', c, 'args =', args, 'kw =', kw)
+
+def f2(a, b, c=0, *, d, **kw):
+ print('a =', a, 'b =', b, 'c =', c, 'd =', d, 'kw =', kw)
+    #+end_src
+
+** 如何变得简洁
+*** 切片
+    还记得之前的substring吗，切片操作还可以用于 /list/, /tuple/,另外还有一种，*a[:]* 会拷贝出一个新的
+*** 迭代
+    比如遍历一个dict
+    #+begin_src python
+d = {'a':1, 'b':2, 'c':3}
+for k in d:
+ print d
+
+for k, v in d:
+ print k
+ print v
+    #+end_src
+    list, tuple, string
+    #+begin_src ptyhon
+for ch in 'abcdefg':
+    print ch
+for v in [1,2,3,4]:
+    print v
+for t in (1,2,3,4,5):
+    print t
+    #+end_src
+*** 列表生成式
+    上边在说到list的时候提到过一次
+    *[a + b for a in A if EXP for b in B if EXP]*
+    #+begin_src python
+a = list(range(1,100))
+# a = [1,2,3, ...,99, 100]
+(i**2 for i in range(10) if i % 2 == 0)
+# 0到10之间偶数的平方
+    #+end_src
+
+*** yield
+    上边说的都是一些简单的，下边来生成一个斐波拉契数列，好像上边的做不了。。。。
+    先来打印一下
+    #+begin_src python
+def fib(max):
+    n, a, b = 0, 0, 1
+    while n < max:
+        print(b)
+        a, b = b, a + b
+        n = n + 1
+    return 'done'
+
+    #+end_src
+    但现在的需要不是打印，而是生成一个迭代器
+    #+begin_src python
+def fib(max):
+    n, a, b = 0, 0, 1
+    while n < max:
+        yield b
+        a, b = b, a + b
+        n = n + 1
+    return 'done'
+    #+end_src
+    好像与上边的没有区别，只是在第四行把print变成了yield，只样返回值不在是 *done* 了
+
+*** map and reduce
+    上边的 *列表生成式* ,可以把一个列表变成另一个，但如要求来的更复杂一点，比函数 f(x).
+    #+begin_src python
+res = map(f, (1,2,3))
+# res = (f(1), f(2), f(3))
+    #+end_src
+    reduce和map类似，它的函数要求为f(x, y)
+    sample：假设python 没有提供int(x) 函数，现在来实它
+    *reduce(f, (a,b,c,d)) = f(f(f(a,b),c),d)*
+    #+begin_src python
+def char2num(s):
+    return {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}[s]
+def str2int(s):
+    return reduce(lambda x, y: x * 10 + y, map(char2num, s))
+    #+end_src
+
+*** filter and sorted
+    filter 与 map的区别在于, *filter* 要求f(x)返回一个布尔值，来判断是否保留x
+    sorted,这个还是看代码吧
+    #+begin_src python
+from operator import itemgetter
+
+L = ['bob', 'about', 'Zoo', 'Credit']
+
+print(sorted(L))
+print(sorted(L, key=str.lower))
+
+students = [('Bob', 75), ('Adam', 92), ('Bart', 66), ('Lisa', 88)]
+
+print(sorted(students, key=itemgetter(0)))
+print(sorted(students, key=lambda t: t[1]))
+print(sorted(students, key=itemgetter(1), reverse=True))
+    #+end_src
+*** lambda
+    *lambda x : f(x)* 其实就等于
+    #+begin_src python
+def func(x):
+    return f(x)
+    #+end_src
+    需要注意的是lambda只能有一个表达式，并且不需要写return,其它的与function没有区别
+
+    #+begin_src python
+map(lambda x: x * x, (1,2,3,4,5))
+    #+end_src
+
+*** 装饰器
+    这东西它是个什么呢，在C#，JAVA， AS3中我们都有用过，举个例子
+    #+begin_src python
+def say():
+    print "Hi, I am a function with name 'say'"
+say()
+
+def log(func):
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+@log
+def say():
+    print "Hi, I am a function with name 'say'"
+say()
+
+def log(text):
+    def decorator(func):
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+
+@log("custom")
+def say():
+    print "Hi, I am a function with name 'say'"
+say()
+
+import functools
+
+def log(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+@log
+def say():
+    print "Hi, I am a function with name 'say'"
+say()
+
+import functools
+
+def log(text):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kw):
+            print('%s %s():' % (text, func.__name__))
+            return func(*args, **kw)
+        return wrapper
+    return decorator
+@log("test")
+def say():
+    print "Hi, I am a function with name 'say'"
+say()
+    #+end_src
+    这种写法在写类的时候经常用到，比如 *@property* *@classmethod* *@staticmethod* 。还有一些第三方扩展的时候方便一些函数的定义，比如 *pyqt* ，具体的API。。
+    未完待续 [[http://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000][参考]]
+
+    #+ATTR_HTML: alt="emacs"
+    [[imgs/python_emacs.png]]
+
