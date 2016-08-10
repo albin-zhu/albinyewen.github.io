@@ -3,43 +3,9 @@
 var fs = require("fs"),
     walk = require("walk"),
     org = require("../lib/org.js"),
-    http = require('http'),
-    exec = require('child_process').exec,
-    qiniu = require('qiniu'),
     path = require("path");
 
 (function(){
-    var last_time;
-    try{
-        last_time = fs.statSync('.last').mtime;
-    }
-    catch(e){
-        last_time = 0;
-        exec('touch .last');
-    }
-    qiniu.conf.ACCESS_KEY="EynbW2hbPz5qpe96JMJpGOOnHP1I265vgw146GhE";
-    qiniu.conf.SECRET_KEY="fjmhDWrTPGaPGbfUt0lw5waDgAzF3S_9lGFG6-cn";
-    var buket = 'albin';
-    var pre_fix = 'release/';
-    function uploadFile(file) {
-        fs.stat(file, function(err, stat){
-            if(err)
-                return;
-            var extra = new qiniu.io.PutExtra();
-            qiniu.io.putFile(new qiniu.rs.PutPolicy(buket + ':' + pre_fix + file).token(), pre_fix+file, file, extra, function(err, ret){
-                if(!err){
-                    exec('touch ' + file)
-                    last_time = fs.statSync(file).mtime;
-                    console.log("put " + file  + " success");
-                }
-                else{
-                    console.log(err);
-                }
-            });
-        });
-    }
-
-
     function trim(s) {
         return s.replace(/(^\s*)|(\s*$)/g, "");
     }
@@ -136,29 +102,8 @@ var fs = require("fs"),
 
     function generateGhPages()
     {
-        var last_time = fs.statSync('.last').mtime;
-        exec('cd orgs && git pull origin master');
         var tmp = new OrgDB();
         tmp.init('orgs/');
-
-        var walker = walk.walk('orgs/');
-        var self = this;
-        walker.on("file", function(root, fileStats, next){
-            var filename = path.join(root, fileStats.name);
-            if(path.extname(filename).indexOf('.git')<0){
-                uploadFile(filename);
-            }
-            next();
-        });
-
-        walker.on("errors", function(root, erros, next){
-            console.log(erros);
-            next();
-        })
-        walker.on("end", function(){
-            console.log("Done!");
-        })
-        exec('touch .last');
     }
 
     generateGhPages();

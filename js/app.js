@@ -22,21 +22,21 @@ phonecatApp.config(['$routeProvider', '$sceDelegateProvider', function($routePro
         title: 'test',
     }).
     when('/phones/:phoneId', {
-        templateUrl: cdn_path + 'partials/phone-detail.html',
+        templateUrl: 'partials/phone-detail.html',
         controller: 'PhoneDetailCtrl',
         title: "test"
     }).
     when('/test', {
-        templateUrl: cdn_path + 'partials/alert-demo.html',
+        templateUrl: 'partials/alert-demo.html',
         controller: 'AlertDemoCtrl',
         title: 'test'
     }).
     when('/index', {
-        templateUrl: cdn_path + 'partials/welcome.html',
+        templateUrl: 'partials/welcome.html',
         controller: 'WelcomeCtrl'
     }).
     when('/orgs/:cat/:org', {
-        templateUrl: cdn_path + 'partials/article.html',
+        templateUrl: 'partials/article.html',
         controller: 'ArticleCtrl'
     }).
     otherwise({

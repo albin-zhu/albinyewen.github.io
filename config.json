@@ -1,5 +1,0 @@
-{
-    "src": "/root/my-blog-app/",
-    "dest": "qiniu:access_key=EynbW2hbPz5qpe96JMJpGOOnHP1I265vgw146GhE&secret_key=fjmhDWrTPGaPGbfUt0lw5waDgAzF3S_9lGFG6-cn>&bucket=albin>&key_prefix=cdn/",
-    "debug_level": 1
-}
