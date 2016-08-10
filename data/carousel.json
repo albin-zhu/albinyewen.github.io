@@ -1,0 +1,35 @@
+{
+  "slides": [
+    {
+      "image": "http://7xq9bs.com1.z0.glb.clouddn.com/blog/img/3.jpg",
+      "id": 1,
+      "text": "test"
+    },
+    {
+      "image": "http://7xq9bs.com1.z0.glb.clouddn.com/blog/img/4.jpg",
+      "id": 0,
+      "text": "test"
+    }
+  ],
+  "whatido": {
+    "title": "What I Do",
+    "subtitle": "除非你有个有钱的爹，不然还是先干好养家的活，再去折腾吧！",
+    "datas": [
+      {
+        "title": "Emacs",
+        "img": "http://7xq9bs.com1.z0.glb.clouddn.com/blog/img/emacs.png",
+        "content": "从大学用到现在，已病入膏肓，不能自拔。一直很喜欢折腾，貌似在IDE这方面不爱『折腾』，无论搞什么东西总想着Emacs上会有的。目前用它主要做todo-list，本页面的编写，包括本站所有的文章都是归功于『org-mode』。但这不是养家的，它也是我工作的主要战场，c++开发调试（每次看到同事用GDB打开N多个终端切的手速，我都很羡慕，我手残，切换速度远远不及，据说要多耗纸才能达到那个APM）。不仅仅是工作，刷推听音乐邮件记帐，也是用它，还有太多与工作无关的不一一列举。"
+      },
+      {
+        "title": "码农",
+        "img": "http://7xq9bs.com1.z0.glb.clouddn.com/blog/img/service2.png",
+        "content": "所谓术业有专攻，我好像没有，如果非要算的话，写代码算。如果非要选一个最喜欢的语言，elisp是一个，python, go, nodejs。等等这好像不止一个，我比较博爱，没办法，选不出。"
+      },
+      {
+        "title": "极客",
+        "img": "http://7xq9bs.com1.z0.glb.clouddn.com/blog/img/service1.png",
+        "content": "这个词对我来说有点牵强。喜欢摄影，喜欢游戏，喜欢视听设备，好像码代码的钱都没了。"
+      }
+    ]
+  }
+}

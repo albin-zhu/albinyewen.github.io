@@ -1,0 +1,242 @@
+
+		<!-- ==============================================
+		MAIN NAV
+		=============================================== -->
+		<div id="main-nav" class="navbar navbar-fixed-top">
+			<div class="container">
+			
+				<div class="navbar-header">
+				
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#site-nav">
+						<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+					</button>
+					
+					<!-- ======= LOGO (for small screens)========-->
+					<a class="navbar-brand visible-xs scrollto" href="#home">Albin's Note</a>
+					
+				</div>
+				
+				<div id="site-nav" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li>
+							<a href="#services" class="scrollto">What I Do</a>
+						</li>
+						<li>
+							<a href="#about" class="scrollto">About Me</a>
+						</li>
+						<li id="logo">
+							<a href="#home" class="scrollto">
+								<h1><i class="fa fa-home fa-lg"></i></h1>
+							</a>
+						</li>
+						<li>
+							<a href="#portfolio" class="scrollto">My Notes</a>
+						</li>
+						<li>
+							<a href="#contact" class="scrollto">Contact Me</a>
+						</li>
+					</ul>
+				</div><!--End navbar-collapse -->
+				
+			</div><!--End container -->
+			
+		</div><!--End main-nav -->
+		
+		<!-- ==============================================
+		HEADER
+		=============================================== -->
+		<header id="home" style="min-height: 1080px">
+
+			<div class="carousel-top">
+				<uib-carousel active="active" interval="myInterval" no-wrap="noWrapSlides">
+					<uib-slide ng-repeat="slide in slides track by slide.id" index="slide.id">
+						<img ng-src="{{slide.image}}" style="margin:auto;">
+						<div class="carousel-caption">
+							<h1>Test</h1>
+							<h4>Slide {{slide.id}}</h4>
+							<p>{{slide.text}}</p>
+						</div>
+					</uib-slide>
+				</uib-carousel>
+			</div>
+			
+		</header><!--End header -->
+			
+		<!-- ==============================================
+		SERVICES
+		=============================================== -->
+		<section id="services" class="white-bg padding-top-bottom">
+		
+			<div class="container">
+				
+				<header class="section-header text-center">
+				
+					<h1 class="scrollimation scale-in">{{whatido.title}}</h1>
+					<sup><i class="fa fa-quote-left fa-fw text-color"></i></sup>					
+					<em>{{whatido.subtitle}}</em>
+					<sup><i class="fa fa-quote-right fa-fw text-color"></i></sup>
+				</header>
+			
+				<div class="row services">
+					<div class="col-md-4 col-sm-6 item scrollimation fade-up" ng-repeat="item in whatido.datas">
+						<div class="icon">
+							<img class="img-responsive img-center" ng-src="{{item.img}}" alt="" />
+						</div>
+						<h2>{{item.title}}</h2>
+						<p>{{item.content}}</p>
+					</div>
+				</div>			
+			</div>		
+		</section>
+		
+		<!-- ==============================================
+		FEATURED PROJECT
+		=============================================== -->	
+		<section id="feat-project" class="gray-bg padding-top">
+			<div class="container">
+				<header class="section-header text-center">
+					<h1 class="scrollimation scale-in">Org Agenda</h1>
+					<p>用它管理工作中的事务，可以在写代码的同时管理好进度。</p>
+				</header>
+				<div class="scrollimation fade-up">
+					<div class="img-wrapper">
+						<img class="img-responsive img-center" src="{{cdn_path}}/img/emcs_screen.png" alt="" />
+						<p class="text-center on-hover"><a class="btn btn-meflat icon-right" href="#external">Visit Website<i class="fa fa-arrow-right"></i></a></p>
+					</div>
+				</div>				
+			</div>		
+		</section>
+		
+		
+		<!-- ==============================================
+		ABOUT
+		=============================================== -->	
+		<section id="about" class="dark-bg light-typo padding-top-bottom">
+			<div class="container">			
+				<header class="section-header text-center">				
+					<h1 class="scrollimation scale-in">About Me</h1>				
+				</header>				
+				<div class="row">				
+					<div class="col-sm-8 col-sm-offset-2">					
+						<img class="img-responsive img-center img-circle scrollimation fade-left" src="{{cdn_path}}/img/favico.jpg" alt="" />				
+						<p class="text-center scrollimation fade-in">一个不喜欢折腾的魔都现役程序猿，除了写代码与游戏，业余生活非常简单，喜欢篮球（与基友）、书法（无聊时写写字）、摄影（给老婆拍照）。 </p>	
+					</div>					
+				</div>				
+				<p class="text-center"><a class="btn btn-meflat scrollto white icon-left" href="#contact"><i class="fa fa-arrow-down"></i>更多</a></p>
+			</div>
+		</section>
+		
+ 		<!-- ==============================================
+		PORTFOLIO
+		=============================================== -->	
+		<section id="portfolio" class="gray-bg padding-top-bottom">			
+			<div class="container">			
+				<header class="section-header text-center">				
+					<h1 class="scrollimation scale-in">My Notes</h1>
+					<p>没事记点东西</p>				
+				</header>
+				
+				<!--==== Portfolio Filters ====-->
+				<div class="text-center">
+					<div class="btn-group">
+	        			<label class="btn btn-primary" ng-model="query[filter]" ng-repeat="tag in dp[filter]" uib-btn-radio="'{{tag}}'">{{tag}}</label>
+	        		</div>
+					<div class="btn-group" uib-dropdown>
+					<button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle>
+						Filter By {{filter}} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+						<li role="menuitem"><a ng-click="changefilter('cat')">Category</li>
+						<li role="menuitem"><a ng-click="changefilter('tags')" >Tag</a></li>
+						<li role="menuitem"><a ng-click="changefilter('date')">Year</a></li>
+					</ul>
+					</div>
+				</div><!--End portfolio filters -->				
+			</div><!--End portfolio header -->			
+			<div class="container masonry-wrapper">			
+				<div id="projects-container" masonry>
+					<article class="project-item mock-up masonry-brick" ng-repeat="item in orgs | filter:query">						
+						<img class="img-responsive project-image" ng-if="item.imgs.length > 0" ng-src="{{cdn_path+item.imgs[0]}}"  alt="">
+						<div class="img-responsive project-image img_holder_1" ng-if="item.imgs.length <= 0">
+							<h2 class="project-title">{{item.title}}</h2>
+						</div>
+						<div class="hover-mask" ng-click="open(item)">
+							<h2 class="project-title">{{item.title}}</h2><!--Project Title -->
+							<p ng-click="open(item)">{{item.cat}}</p><!--Project Subtitle -->
+						</div>
+						
+					</article>
+				</div><!-- End projects -->				
+			</div><!-- End container --> 
+			
+			
+		</section>
+		<!-- ==============================================
+		DRIBBLE 
+		=============================================== -->	
+		
+		<!-- ==============================================
+		CONTACT
+		=============================================== -->	
+		<section id="contact" class="dark-bg light-typo padding-top">		
+			<div class="container">			
+				<header class="section-header text-center">				
+					<h1 class="scrollimation scale-in">联系我</h1>
+					<sup><i class="fa fa-quote-left fa-fw text-color"></i></sup>					
+					<em>这里参照了meflat,记住这里biebb.cc</em>
+					<sup><i class="fa fa-quote-right fa-fw text-color"></i></sup>				
+				</header>
+				
+				<form  id="contact-form" class="bl_form text-center" action="/" method="post" novalidate>
+					<span class="field-wrap scrollimation fade-right">
+						<label class="control-label" for="contact-name">Name</label>
+						<input id="contact-name" name="contactName" type="text" class="label_better requiredField" data-new-placeholder="Name" placeholder="Name" data-error-empty="*Enter your name">
+					</span>
+					<span class="field-wrap scrollimation fade-in">
+						<label class="control-label" for="contact-mail">Email</label>
+						<input id="contact-mail" name="email" type="email" class="label_better requiredField" data-new-placeholder="Email Address" placeholder="Email Address" data-error-empty="*Enter your email" data-error-invalid="x Invalid email address">
+					</span>
+					<span class="field-wrap scrollimation fade-left">
+						<label class="control-label" for="contact-message">Message</label>
+						<textarea id="contact-message" name="comments" rows="1" class="label_better requiredField" data-new-placeholder="Message" placeholder="Message" data-error-empty="*Enter your message"></textarea>
+					</span>
+					
+					<p class="text-center"><button  name="submit" type="submit" class="btn btn-meflat icon-left" data-error-message="Error!" data-sending-message="Sending..." data-ok-message="Message Sent"><i class="fa fa-paper-plane"></i>Send Message</button></p>
+					<input type="hidden" name="submitted" id="submitted" value="true" />
+					
+				</form>
+				
+			</div>
+		
+		</section>
+		
+		<!-- ==============================================
+		FOOTER
+		=============================================== -->	
+		
+		<footer id="main-footer" class="dark-bg light-typo">
+		
+			<div class="container">
+			
+				<hr>
+				
+				<div class="row">
+				
+					<div class="col-sm-6">
+						<ul class="social-links">
+							<li class="scrollimation fade-right d4"><a href="https://twitter.com/zybyy"><i class="fa fa-twitter fa-fw"></i></a></li>
+							<li class="scrollimation fade-right d3"><a href="https://www.facebook.com/hialbin"><i class="fa fa-facebook fa-fw"></i></a></li>
+							<li class="scrollimation fade-right d2"><a href="https://plus.google.com/101306452641313734986"><i class="fa fa-google-plus fa-fw"></i></a></li>
+							<li class="scrollimation fade-right d1"><a href="https://dribbble.com/"><i class="fa fa-dribbble fa-fw"></i></a></li>
+							<li class="scrollimation fade-right"><a href="https://www.linkedin.com/"><i class="fa fa-linkedin fa-fw"></i></a></li>
+						</ul>
+					</div>
+					
+					
+					
+				</div>
+				
+			</div>
+			
+		</footer>
+

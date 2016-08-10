@@ -1,0 +1,55 @@
+<div>
+			
+				<div class="modal-dialog">
+				
+					<div class="modal-content">
+					
+						<div class="modal-header">
+						
+							<div class="container">
+							
+								<button id="myclose" class="close" ng-click="$close()">×</button>
+								
+								<h1 id="hdr-title" class="text-center">{{item.title}}</h1>
+								<div class="row">
+									<div class="col-md-8 col-md-offset-2">
+										<div class="image-wrapper">	
+										<img class="img-responsive" src="{{cdn_path}}assets/chrome.png" alt="">
+											<div class="loader"></div>
+											<div class="screen flexslider done">								
+													<ul class="slides">
+														<li ng-repeat="img in item.imgs">
+															<<img ng-src="{{img}}" alt="">
+														</li>
+													</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						
+						<div class="modal-body">
+							<div class="container">
+								<div class="row">
+									<div id="project-sidebar" class="col-md-3">
+										<h2 id="sdbr-title">{{item.title}}</h2>
+										<p id="sdbr-category">{{item.cat}}</p>
+										<p id="sdbr-category">{{item.tags}}</p>
+										<p id="sdbr-date">{{item.date}}</p>								
+									</div>
+									<div id="project-content" class="col-md-8 col-md-offset-1" ng-bind-html="item.toc">
+										
+									</div>
+									<a href="{{item.url}}" target="_blank">READ MORE</a>
+								</div>
+								
+							</div>
+						</div><!-- End modal-body -->
+						
+					</div><!-- End modal-content -->
+					
+				</div><!-- End modal-dialog -->
+				
+			</div>

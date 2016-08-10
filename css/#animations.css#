@@ -1,0 +1,14 @@
+/*
+ * animations css stylesheet
+ */
+
+/* animate ngRepeat in phone listing */
+
+
+.anim-show{
+   opasca
+   transition: all 0.7s ease-out;
+}
+.ng-show-active {
+  right: 50px;
+}
